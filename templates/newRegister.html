@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}New Register{% endblock %}
+
+{% block content %}
+<h1>New Register</h1>
+
+<div class="selection">
+    <select name="machines" id="machines">
+        <option value="#">Select your machine</option>
+        <option value="doosan5700">Doosan 5700</option>
+        <option value="doosan6700">Doosan 6700</option>
+    </select>
+</div>
+<div class="selection">
+    <select name="operators" id="operators">
+        <option value="#">Operator</option>
+        <option value="thierry">Thierry</option>
+        <option value="KieranBree">Kieran Bree</option>
+    </select>
+</div>
+
+
+{% endblock %}

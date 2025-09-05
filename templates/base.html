@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Title{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/843f08e48c.js" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                    <a href="{{ url_for('home') }}">
+                        <i class="fa-regular fa-house"></i>Home</a>
+                </li>
+                <li>
+                    <a href="{{url_for('newRegister')}}">
+                        <i class="fa-regular fa-pen-to-square"></i>New Register</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <div class="footer-content">
+            2025 - My Website
+        </div>
+    </footer>
+    <!-- <script src="../static/js/login.js"></script> -->
+</body>
+
+</html>
