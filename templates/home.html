@@ -1,39 +1,54 @@
-{% extends 'base.html' %}
-
-{% block title %}Home Page{% endblock %}
+{% extends "base.html" %}
+{% block title %}Job List{% endblock %}
 
 {% block content %}
-<h1>Home Page</h1>
-
-<table>
-    <thead>
-        <tr>
-            <th>Operator</th>
-            <th>Machine</th>
-            <th>Costumer</th>
-            <th>Drawing Number</th>
-            <th>Start Date</th>
-            <th>Start time</th>
-            <th>End Date</th>
-            <th>End time</th>
-            <th>TOTAL TIME</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for job in jobs %}
-        <tr>
-            <td>{{ job.name }}</td>
-            <td>{{ job.machine }}</td>
-            <td>{{ job.costumer }}</td>
-            <td>{{ job.drawing_number }}</td>
-            <td>{{ job.start_date }}</td>
-            <td>{{ job.start_time }}</td>
-            <td>{{ job.end_date }}</td>
-            <td>{{ job.end_date }}</td>
-            <td>{{ job.total_time }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
+<h1>Jobs</h1>
+<div class="table-container">
+    <table border="1" cellpadding="5">
+        <thead>
+            <tr>
+                <th>Costumer</th>
+                <th>Machine</th>
+                <th>Operator</th>
+                <th>Drawing Number</th>
+                <th>Start Date</th>
+                <th>Start Time</th>
+                <th>End Date</th>
+                <th>End Time</th>
+                <th>Total Hours</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job in jobs %}
+            <tr>
+                <td>{{ job.costumer }}</td>
+                <td>{{ job.machine }}</td>
+                <td>{{ job.operator }}</td>
+                <td>{{ job.drawing_number }}</td>
+                <td>{{ job.start_date.strftime('%Y-%m-%d') if job.start_date else "" }}</td>
+                <td>{{ job.start_time.strftime('%H:%M') if job.start_time else "" }}</td>
+                <td>{{ job.end_date.strftime('%Y-%m-%d') if job.end_date else "" }}</td>
+                <td>{{ job.end_time.strftime('%H:%M') if job.end_time else "" }}</td>
+                <td>{{ job.total_hours_minutes or "" }}</td>
+                <td class="actions">
+                    {% if not job.end_date %}
+                    <form method="post" action="{{ url_for('finish_job', job_id=job.id) }}">
+                        <button type="submit">Finish</button>
+                    </form>
+                    {% else %}
+                    <a href="{{ url_for('edit_job', job_id=job.id) }}" style="display:inline;">
+                        <button type="submit" class="btn edit-button">Edit</button>
+                    </a>
+                    <form method="post" action="{{ url_for('delete_job', job_id=job.id) }}" style="display:inline;">
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this job?');"
+                            class="btn delete-button">Delete</button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

@@ -1,98 +1,107 @@
-from flask import Flask, jsonify, request, render_template, redirect, url_for, flash
-from flask_sqlalchemy import SQLAlchemy
-from config import Config
-from models import db, Jobs
+from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime, time, timedelta
-from sqlalchemy import text
+from models import db, Jobs
+from config import Config 
 
 app = Flask(__name__)
 app.config.from_object(Config)
 
-# Initialize SQLAlchemy
 db.init_app(app)
 
-@app.route('/')
-def login():
-    return render_template('login.html', title="Login")
+with app.app_context():
+    db.create_all()
 
-@app.route('/home')
+@app.route("/")
+def login():
+    return render_template("login.html")
+
+@app.route("/home")
 def home():
     jobs = Jobs.query.all()
-    return render_template('home.html', jobs=jobs, title="Home")
+    return render_template("home.html", jobs=jobs)
 
-@app.route('/newRegister', methods=['GET', 'POST'])
+@app.route("/newRegister", methods=["GET", "POST"])
 def newRegister():
-    if request.method == 'POST':
-        try:
-            # Get form data
-            costumer = request.form['costumer']
-            drawing_number = request.form['drawing_number']
-            machine = request.form['machine']
-            operator = request.form['operator']
-            date_start = request.form['date-start']
-            time_start = request.form['time-start']
-            date_end = request.form['date-end']
-            time_end = request.form['time-end']
+    if request.method == "POST":
+        costumer = request.form.get("costumer")
+        drawing_number = request.form.get("drawing_number")
+        machine = request.form.get("machine")
+        operator = request.form.get("operator")
 
-            print(costumer, drawing_number, machine, operator, date_start, time_start, date_end, time_end)
+        now = datetime.now()
+        start_date = now.date()
+        start_time = now.time().replace(microsecond=0)
 
-            # Convert date and time strings into Python objects
-            print("Convert date and time strings into Python objects")
-            start_datetime = datetime.strptime(f"{date_start} {time_start}", "%Y-%m-%d %H:%M")
-            end_datetime = datetime.strptime(f"{date_end} {time_end}", "%Y-%m-%d %H:%M")
-            
-            print(start_datetime, end_datetime)
-            # Calculate total time
-            total_time = end_datetime - start_datetime
-            total_hours = total_time.total_seconds() / 3600  # Convert to hours
+        new_job = Jobs(
+            costumer=costumer,
+            drawing_number=drawing_number,
+            machine=machine,
+            operator=operator,
+            start_date=start_date,
+            start_time=start_time
+        )
+        db.session.add(new_job)
+        db.session.commit()
 
-            hours = int(hours_float)
-            minutes = int((hours_float - hours) * 60)
-            seconds = int(round((((hours_float - hours) * 60) - minutes) * 60))
+        return redirect(url_for("home"))
 
-            # Convert to proper time format using timedelta
-            total_time_formatted = str(total_time)  # This automatically formats as "HH:MM:SS"
+    return render_template("newRegister.html")
 
-            print(f"Total time: {total_time}, Total hours: {total_hours}, Formatted time: {total_time_formatted}")
-            # Extract date and time components
-            start_date = start_datetime.date()
-            start_time = start_datetime.time()
-            end_date = end_datetime.date()
-            end_time = end_datetime.time()
+@app.route("/finish/<int:job_id>", methods=["POST"])
+def finish_job(job_id):
+    job = Jobs.query.get_or_404(job_id)
+    job.finish()
+    db.session.commit()
+    return redirect(url_for("home"))
 
-            # Create new Job entry
-            new_job = Jobs(
-                name=operator,
-                machine=machine,
-                costumer=costumer,
-                drawing_number=drawing_number,
-                start_date=start_date,
-                start_time=start_time,
-                end_date=end_date,
-                end_time=end_time,
-                total_time=total_hours  # Store total time in hours
-            )
-            print("New job created:", new_job)
+@app.route("/edit/<int:job_id>", methods=["GET", "POST"])
+def edit_job(job_id):
+    job = Jobs.query.get_or_404(job_id)
 
-            # Save into database
-            db.session.begin()
-            db.session.add(new_job)
-            db.session.commit()
-            db.session.flush()
+    if request.method == "POST":  # <-- only process form data on POST
+        job.costumer = request.form.get("costumer")
+        job.drawing_number = request.form.get("drawing_number")
+        job.machine = request.form.get("machine")
+        job.operator = request.form.get("operator")
 
-            print("Job committed to database")
-            flash(f'Job registered successfully! Total time: {total_hours:.2f} hours', 'success')
-            return redirect(url_for('home'))
-            
-        except Exception as e:
-            print(f"An error occurred: {str(e)}")
-            db.session.rollback()
-            flash(f'An error occurred: {str(e)}', 'error')
-            return render_template('newRegister.html', title="New Register")
+        # Convert form values to proper types
+        job.start_date = datetime.strptime(request.form.get("start_date"), "%Y-%m-%d").date()
+        job.start_time = datetime.strptime(request.form.get("start_time"), "%H:%M").time()
 
-    return render_template('newRegister.html', title="New Register")
+        end_date = request.form.get("end_date")
+        end_time = request.form.get("end_time")
 
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()  # Create tables if not exist
+        job.end_date = datetime.strptime(end_date, "%Y-%m-%d").date() if end_date else None
+        job.end_time = datetime.strptime(end_time, "%H:%M").time() if end_time else None
+
+        # Recalculate total_time if both start and end exist
+        if job.start_date and job.start_time and job.end_date and job.end_time:
+            start_dt = datetime.combine(job.start_date, job.start_time)
+            end_dt = datetime.combine(job.end_date, job.end_time)
+            job.total_time = end_dt - start_dt
+
+            print(f"Recalculated total_time: {job.total_time}")
+        else:
+            job.total_time = None
+
+
+        db.session.commit()
+        return redirect(url_for("home"))
+    
+    return render_template("edit_job.html", job=job)
+
+
+
+@app.route("/delete/<int:job_id>", methods=["POST"])
+def delete_job(job_id):
+    job = Jobs.query.get_or_404(job_id)
+    db.session.delete(job)
+    db.session.commit()
+    return redirect(url_for("home"))
+
+@app.route("/logout")
+def logOut():
+    return redirect(url_for("login"))
+
+if __name__ == "__main__":
     app.run(debug=True)

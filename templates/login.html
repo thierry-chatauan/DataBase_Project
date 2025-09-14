@@ -5,20 +5,19 @@
 
 {% block content %}
 <style>
-    header {
-        display: none;
-    }
+    header{display: none;}
 </style>
 
-
-<h1>Login Page</h1>
-<form onsubmit="return validate()">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
-    <br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-    <br>
-    <button type="submit">Login</button>
-</form>
+<div class="login">
+    <h1 class="login-title">Login Page</h1>
+    <form onsubmit="return validate()" class="login-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <button type="submit" class="login-button">Login</button>
+    </form>
+</div>
 {% endblock %}

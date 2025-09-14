@@ -1,78 +1,138 @@
 body {
-    
-    height: 100dvh; /* ocupa toda a altura da tela */
-    background-color: #f0f2f5;
-    font-family: "open-sans", sans-serif;
-}
-
-/* Formulário */
-form {
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    width: 300px;
-    text-align: center;
-}
-
-/* Labels */
-label {
-    display: block;
-    margin: 15px 0 5px;
-    font-weight: bold;
-}
-
-/* Inputs */
-input[type="text"],
-input[type="password"] {
-    width: 100%;
-    padding: 8px 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
+    font-family: "open-sans", sans-serif;
+    background-color: #c2c2c2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* Botão */
-button {
-    margin-top: 20px;
-    padding: 10px 15px;
-    width: 100%;
+/* login */
+.login {
+    
+    width: 500px;
+    margin: 100px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    background-color: #9b9b9b;
+}
+
+.login-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form input {
+    margin-bottom: 5px;
+    color: #555;
+    height: 30px;
+}
+
+.login-button {
+    padding: 10px;
     background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
     cursor: pointer;
+    margin-top: 10px;
 }
 
-button:hover {
+.login-button:hover {
     background-color: #45a049;
 }
 
-
-ul{
-    display: flex;
-    gap: 20px;
-    padding: 0;
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* horizontal scroll if too wide */
+    margin: 10px 0;
 }
-li{
-    list-style: none;
-}
-
-table, tr, td, th{
+/* home */
+table, tr, td, th {
     border-collapse: collapse;
     padding-left: 30px;
     padding-right: 30px;
     border: 1px solid black;
-}
-
-footer {
-    background-color: lightgray;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 10px;
     text-align: center;
 }
 
+th {
+    background-color: green;
+    color: white;
+}
+
+
+tr:nth-child(odd) {
+    background-color: #afafaf;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+tr:hover {
+    background-color: #dbc81e;
+}
+
+.actions {
+    height: 40px;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: none  !important;
+}
+
+.btn{
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button.edit-button{
+    background-color: #4CAF50;
+    color: white;
+}
+button.edit-button:hover{
+    background-color: #45a049;
+}
+button.delete-button{
+    background-color: #f44336;
+    color: white;
+}
+button.delete-button:hover{
+    background-color: #da190b;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #9b9b9b;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+header {
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+}
+
+ul {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+li {
+    list-style: none;
+}

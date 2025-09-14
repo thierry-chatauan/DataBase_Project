@@ -5,20 +5,20 @@
 {% block content %}
 <h1>New Register</h1>
 
-<div class="selection">
-    <select name="machines" id="machines">
-        <option value="#">Select your machine</option>
-        <option value="doosan5700">Doosan 5700</option>
-        <option value="doosan6700">Doosan 6700</option>
-    </select>
-</div>
-<div class="selection">
-    <select name="operators" id="operators">
-        <option value="#">Operator</option>
-        <option value="thierry">Thierry</option>
-        <option value="KieranBree">Kieran Bree</option>
-    </select>
-</div>
+<form action="{{ url_for('newRegister') }}" method="POST" class="register-form">
+    <label for="costumer">Costumer:</label>
+    <input type="text" id="costumer" name="costumer" required><br><br>
+
+    <label for="drawing_number">Drawing number:</label>
+    <input type="text" id="drawing_number" name="drawing_number" required><br><br>
+
+    <label for="machine">Machine:</label>
+    <input type="text" id="machine" name="machine" required><br><br>
+
+    <label for="operator">Operator:</label>
+    <input type="text" id="operator" name="operator" required><br><br>
+    <input type="submit" value="Register">
+</form>
 
 
 {% endblock %}
