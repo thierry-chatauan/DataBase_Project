@@ -2,14 +2,13 @@
 
 {% block title %}Login{% endblock %}
 
-
 {% block content %}
 <style>
-    header{display: none;}
+    li{display: none;}
 </style>
 
 <div class="login">
-    <h1 class="login-title">Login Page</h1>
+    <h1 class="title login-title">Login Page</h1>
     <form onsubmit="return validate()" class="login-form">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>

@@ -3,37 +3,39 @@
 {% block title %}Edit Job{% endblock %}
 
 {% block content %}
-<h1>Edit Job</h1>
 
-<form method="POST" action="{{ url_for('edit_job', job_id=job.id) }}" class="edit-job-form">
-    <label for="costumer">Costumer:</label>
-    <input type="text" id="costumer" name="costumer" value="{{ job.costumer }}" required><br><br>
 
-    <label for="drawing_number">Drawing number:</label>
-    <input type="text" id="drawing_number" name="drawing_number" value="{{ job.drawing_number }}" required><br><br>
+<h1 class="title">Edit Job</h1>
 
-    <label for="machine">Machine:</label>
-    <input type="text" id="machine" name="machine" value="{{ job.machine }}" required><br><br>
+<form method="POST" action="{{ url_for('edit_job', job_id=job.id) }}" class="form edit-job-form">
+       <label for="costumer">Costumer:</label>
+       <input type="text" id="costumer" name="costumer" value="{{ job.costumer }}" required><br><br>
 
-    <label for="operator">Operator:</label>
-    <input type="text" id="operator" name="operator" value="{{ job.operator }}" required><br><br>
+       <label for="drawing_number">Drawing number:</label>
+       <input type="text" id="drawing_number" name="drawing_number" value="{{ job.drawing_number }}" required><br><br>
 
-    <label for="start_date">Start Date:</label>
-    <input type="date" id="start_date" name="start_date"
-           value="{{ job.start_date.strftime('%Y-%m-%d') if job.start_date else '' }}" required><br><br>
+       <label for="machine">Machine:</label>
+       <input type="text" id="machine" name="machine" value="{{ job.machine }}" required><br><br>
 
-    <label for="start_time">Start Time:</label>
-    <input type="time" id="start_time" name="start_time"
-           value="{{ job.start_time.strftime('%H:%M') if job.start_time else '' }}" required><br><br>
+       <label for="operator">Operator:</label>
+       <input type="text" id="operator" name="operator" value="{{ job.operator }}" required><br><br>
 
-    <label for="end_date">End Date:</label>
-    <input type="date" id="end_date" name="end_date"
-           value="{{ job.end_date.strftime('%Y-%m-%d') if job.end_date else '' }}"><br><br>
+       <label for="start_date">Start Date:</label>
+       <input type="date" id="start_date" name="start_date"
+              value="{{ job.start_date.strftime('%Y-%m-%d') if job.start_date else '' }}" required><br><br>
 
-    <label for="end_time">End Time:</label>
-    <input type="time" id="end_time" name="end_time"
-           value="{{ job.end_time.strftime('%H:%M') if job.end_time else '' }}"><br><br>
+       <label for="start_time">Start Time:</label>
+       <input type="time" id="start_time" name="start_time"
+              value="{{ job.start_time.strftime('%H:%M') if job.start_time else '' }}" required><br><br>
 
-    <input type="submit" value="Save Changes">
+       <label for="end_date">End Date:</label>
+       <input type="date" id="end_date" name="end_date"
+              value="{{ job.end_date.strftime('%Y-%m-%d') if job.end_date else '' }}"><br><br>
+
+       <label for="end_time">End Time:</label>
+       <input type="time" id="end_time" name="end_time"
+              value="{{ job.end_time.strftime('%H:%M') if job.end_time else '' }}"><br><br>
+
+       <input type="submit" value="Save Changes">
 </form>
 {% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}About the Project{% endblock %}
+
+{% block content %}
+
+<h1 class="title">About the Project</h1>
+<div class="about-content">
+    <!-- Carousel container -->
+    <div class="carousel-container">
+        <div class="carousel-slide active"
+            style="background-image: url('{{ url_for('static', filename='images/image1.jpeg') }}');"></div>
+        <div class="carousel-slide"
+            style="background-image: url('{{ url_for('static', filename='images/image2.jpeg') }}');"></div>
+        <div class="carousel-slide"
+            style="background-image: url('{{ url_for('static', filename='images/image3.jpeg') }}');"></div>
+        <div class="carousel-slide"
+            style="background-image: url('{{ url_for('static', filename='images/image4.jpeg') }}');"></div>
+        <div class="carousel-slide"
+            style="background-image: url('{{ url_for('static', filename='images/image5.jpeg') }}');"></div>
+        <div class="carousel-slide"
+            style="background-image: url('{{ url_for('static', filename='images/image6.jpeg') }}');"></div>
+        <div class="carousel-slide"
+            style="background-image: url('{{ url_for('static', filename='images/image7.jpeg') }}');"></div>
+        <div class="carousel-slide"
+            style="background-image: url('{{ url_for('static', filename='images/image8.jpeg') }}');"></div>
+        <div class="carousel-slide"
+            style="background-image: url('{{ url_for('static', filename='images/image9.jpeg') }}');"></div>
+        <div class="carousel-slide"
+            style="background-image: url('{{ url_for('static', filename='images/image10.jpeg') }}');"></div>
+    </div>
+
+    <div class="about-text">
+        <p>This project is a web application designed to manage job records for a manufacturing or production
+            environment.
+            It allows users to create, edit, and delete job entries, as well as track the start and end times of each
+            job.
+            The application is built using Flask, a lightweight web framework for Python, and utilizes HTML and CSS for
+            the
+            front-end design.</p>
+
+        <p>Overall, the project provides a user-friendly interface for efficiently managing job records and keeps track
+            of
+            production processes.</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const slides = document.querySelectorAll('.carousel-container .carousel-slide');
+        let currentSlide = 0;
+
+        function showNextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        setInterval(showNextSlide, 5000); // change every 5s
+    });
+</script>
+{% endblock %}

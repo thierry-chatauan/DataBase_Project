@@ -26,11 +26,18 @@
                     <a href="{{url_for('newRegister')}}">
                         <i class="fa-regular fa-pen-to-square"></i>New Register</a>
                 </li>
+                <li class="About">
+                    <a href="{{ url_for('about')}}">
+                        <i class="fa-solid fa-info"></i>About
+                    </a>
+                </li>
                 <li class="logout">
                     <a href="{{ url_for('logOut')}}">
                         <i class="fa-solid fa-right-from-bracket"></i>Log Out
                     </a>
                 </li>
+
+
             </ul>
 
         </nav>
@@ -44,6 +51,7 @@
             2025 - Built by Thierry Silva
         </div>
     </footer>
+    {% block scripts %}{% endblock %}
 </body>
 
 </html>

@@ -2,7 +2,7 @@
 {% block title %}Job List{% endblock %}
 
 {% block content %}
-<h1>Jobs</h1>
+<h1 class="title">Jobs</h1>
 <div class="table-container">
     <table border="1" cellpadding="5">
         <thead>
@@ -34,7 +34,7 @@
                 <td class="actions">
                     {% if not job.end_date %}
                     <form method="post" action="{{ url_for('finish_job', job_id=job.id) }}">
-                        <button type="submit">Finish</button>
+                        <button type="submit" class="btn edit-button">Finish</button>
                     </form>
                     {% else %}
                     <a href="{{ url_for('edit_job', job_id=job.id) }}" style="display:inline;">

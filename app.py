@@ -2,6 +2,9 @@ from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime, time, timedelta
 from models import db, Jobs
 from config import Config 
+from dotenv import load_dotenv
+
+load_dotenv() 
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -102,6 +105,11 @@ def delete_job(job_id):
 @app.route("/logout")
 def logOut():
     return redirect(url_for("login"))
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)

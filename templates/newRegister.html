@@ -3,9 +3,11 @@
 {% block title %}New Register{% endblock %}
 
 {% block content %}
-<h1>New Register</h1>
 
-<form action="{{ url_for('newRegister') }}" method="POST" class="register-form">
+
+<h1 class="title">New Register</h1>
+
+<form action="{{ url_for('newRegister') }}" method="POST" class="form register-form">
     <label for="costumer">Costumer:</label>
     <input type="text" id="costumer" name="costumer" required><br><br>
 
